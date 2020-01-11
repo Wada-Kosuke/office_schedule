@@ -33,7 +33,7 @@ export default {
   methods: {
     goToDatePage (arg) {
       this.$router.push({
-        name: 'calendar-id',
+        name: 'id',
         params: { id: arg.dateStr }
       });
     }
