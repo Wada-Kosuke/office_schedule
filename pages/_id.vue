@@ -6,7 +6,7 @@
         <li v-for="schedule in todaySchedules" :key="schedule.id">
           <span id="eventTime">
             <span>{{ schedule.event.startTime }}</span>
-            <span>〜</span>
+            <span v-if="schedule.event.startTime || schedule.event.endTime">〜</span>
             <span>{{ schedule.event.endTime }}</span>
           </span>
           <span id="eventName">{{ schedule.event.name }}</span>
@@ -54,7 +54,12 @@ export default {
         return
       }
       this.$store.dispatch('schedules/add', this.event)
-      this.event.name = ''  // この処理がないとundefinedになりエラーが発生
+      this.event = {
+        startTime: '',
+        endTime: '',
+        name: '',
+        date: this.$route.params.id
+      }
     },
     remove(id) {
       console.log(this.event.name)
@@ -63,7 +68,7 @@ export default {
   },
   computed: {
     todaySchedules() {
-      return this.$store.state.schedules.schedules.filter((schedule) => {
+      return this.$store.getters['schedules/orderedSchedules'].filter((schedule) => {
         return (schedule.event.date === this.$route.params.id);
       });
     }
@@ -79,6 +84,10 @@ export default {
   background: #fff;
   border: 1px solid #aaa;
   border-radius: 5px;
+  h3 {
+    display: inline-block;
+    border-bottom: 2px solid #4c9181;
+  }
   ul {
     padding: 0;
     margin: 16px 0;
@@ -90,10 +99,10 @@ export default {
       font-size: 18px;
       border-radius: 5px;
       #eventTime {
-        width: 160px;
+        width: 120px;
         font-size: 14px;
         display: inline-block;
-        text-align: center;
+        margin-left: 2.5vw;
       }
       #eventName {
         margin-right: 20px;
@@ -113,7 +122,11 @@ export default {
   padding: 20px;
   border: 1px solid #aaa;
   border-radius: 5px;
-  h4 { margin-bottom: 20px; }
+  h4 {
+    margin-bottom: 20px;
+    display: inline-block;
+    border-bottom: 2px solid #4c9181;
+  }
   input {
     margin-bottom: 10px;
   }
@@ -127,10 +140,11 @@ export default {
     width: 90%;
   }
   button {
+    // layouts/default.vueのスタイルを使用
     width: 120px;
-    padding: 6px;
     margin: 20px 0 0 20px;
     font-size: 16px;
+    padding: 6px;
   }
 }
 </style>

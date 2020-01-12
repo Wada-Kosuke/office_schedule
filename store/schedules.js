@@ -23,3 +23,9 @@ export const actions = {
     schedulesRef.doc(id).delete()
   })
 }
+
+export const getters = {
+  orderedSchedules: state => {
+    return _.sortBy(state.schedules, 'event.startTime')
+  }
+}
