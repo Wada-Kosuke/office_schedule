@@ -16,18 +16,31 @@
 
 <style lang="scss">
 .calender {
-  width: 60vw;
+  width: 50vw;
   margin: auto;
   h2 { margin: 20px 0; }
 }
 .fc {
-  width: 60vw;
+  width: 400px;
   margin: auto;
   h2 {
     margin: 0;
     font-size: 20px;
   }
+  button {
+    height: 30px;
+    padding: 0 8px;
+  }
+  .fc-today-button { display: none; }
+  .fc-day, .fc-day-top { cursor: pointer; }
+  .fc-content-skeleton { padding: 0 !important; }
+  .fc-body .fc-row {
+    min-height: 0 !important;
+  }
+  .fc-day-number {
+    width: 100%;
+    padding: 2px 0 !important;
+    text-align: center;
+  }
 }
-.fc-day, .fc-day-top { cursor: pointer; }
-.fc-content-skeleton { padding: 0 !important; }
 </style>

@@ -2,7 +2,7 @@
   <div>
     <div class="schedules">
       <h3 class="title">{{ this.$route.params.date }} の予定</h3>
-      <ul>
+      <ul v-if="this.schedules != ''">
         <li v-for="schedule in schedules" :key="schedule.id">
           <span id="eventTime">
             <span>{{ schedule.event.startTime }}</span>
@@ -12,8 +12,8 @@
           <span id="eventName">{{ schedule.event.name }}</span>
           <button @click="remove(schedule.id)">削除</button>
         </li>
-        <li v-else>まだ予定はありません</li>
       </ul>
+      <h4 v-else>まだ予定はありません</h4>
     </div>
     <div class="form">
       <h4 class="title">予定を追加する</h4>
@@ -49,6 +49,7 @@ export default {
   },
   created: function() {
     this.$store.dispatch('schedules/init')
+    console.log(this.schedules.first)
   },
   methods: {
     add() {
@@ -115,6 +116,9 @@ export default {
     li:nth-child(even) {
       background: #F8FFF8;
     }
+  }
+  h4 {
+    margin: 20px 0 0 2vw;
   }
 }
 .form {
