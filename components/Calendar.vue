@@ -2,7 +2,7 @@
   <FullCalendar
     default-view="dayGridMonth"
     :plugins="calendarPlugins"
-    :height="600"
+    :height="480"
     :locale="locale"
     @dateClick="goToDatePage"
   />
@@ -33,8 +33,8 @@ export default {
   methods: {
     goToDatePage (arg) {
       this.$router.push({
-        name: 'id',
-        params: { id: arg.dateStr }
+        name: 'group-date',
+        params: { date: arg.dateStr }
       });
     }
   }
