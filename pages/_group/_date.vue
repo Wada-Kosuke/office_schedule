@@ -2,7 +2,7 @@
   <div>
     <div class="schedules">
       <h3 class="title">{{ this.$route.params.date }} の予定</h3>
-      <ul v-if="this.schedules != ''">
+      <ul v-if="this.schedules != ''" class="list">
         <li v-for="schedule in schedules" :key="schedule.id">
           <span id="eventTime">
             <span>{{ schedule.event.startTime }}</span>
@@ -47,9 +47,11 @@ export default {
       }
     }
   },
+  validate({ params }) {
+    return /^\d{4}-\d{2}-\d{2}$/.test(params.date)
+  },
   created: function() {
     this.$store.dispatch('schedules/init')
-    console.log(this.schedules.first)
   },
   methods: {
     add() {
@@ -90,32 +92,14 @@ export default {
   background: #fff;
   border: 1px solid #aaa;
   border-radius: 5px;
-  ul {
-    padding: 0;
-    margin: 16px 0;
-    list-style: none;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    li {
-      padding: 6px 0;
-      font-size: 18px;
-      border-radius: 5px;
-      #eventTime {
-        width: 120px;
-        font-size: 14px;
-        display: inline-block;
-        margin-left: 2.5vw;
-      }
-      #eventName {
-        margin-right: 20px;
-      }
-    }
-    li:nth-child(odd) {
-      background: #F0FFF0;
-    }
-    li:nth-child(even) {
-      background: #F8FFF8;
-    }
+  #eventTime {
+    width: 120px;
+    font-size: 14px;
+    display: inline-block;
+    margin-left: 2.5vw;
+  }
+  #eventName {
+    margin-right: 20px;
   }
   h4 {
     margin: 20px 0 0 2vw;
@@ -142,7 +126,7 @@ export default {
     padding: 6px;
     width: 90%;
   }
-  button {  // 加えて layouts/default.vue の.button--greenスタイルを適用
+  button {
     width: 120px;
     margin: 20px 0 0 20px;
     font-size: 16px;
