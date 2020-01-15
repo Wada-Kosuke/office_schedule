@@ -5,6 +5,7 @@
       <ul class="list">
         <li v-for="group in groups" :key="group.id">
           <nuxt-link :to="group.name + '/' + today">{{ group.name }}</nuxt-link>
+          <button @click="remove(group.id)">削除</button>
         </li>
       </ul>
     </div>
@@ -30,6 +31,7 @@ export default {
   },
   created: function() {
     this.$store.dispatch('groups/init')
+    this.$store.dispatch('schedules/init')
   },
   methods: {
     add() {
@@ -40,6 +42,15 @@ export default {
       this.name = ''
     },
     remove(id) {
+      window.confirm('削除してよろしいですか？')
+      // 削除するグループのスケジュールもすべて削除
+      const groupSchedules = this.$store.getters['schedules/orderedSchedules'].filter((schedules) => {
+        return schedules.event.group === this.groups.find(group => group.id === id).name
+      })
+      groupSchedules.forEach(function(schedule) {
+        this.$store.dispatch('schedules/remove', schedule.id)
+      }, this)
+      // グループを削除
       this.$store.dispatch('groups/remove', id)
     }
   },
