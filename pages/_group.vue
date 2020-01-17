@@ -1,9 +1,10 @@
 <template>
   <div>
-    <div class="calender">
+    <div class="calender col-md-6">
       <Nav></Nav>
-      <h2 class="title">{{ this.$route.params.group }} のスケジュール</h2>
+      <h4 class="title">{{ this.$route.params.group }} のスケジュール</h4>
       <full-calendar></full-calendar>
+      <p>日付をクリックすると予定が表示されます</p>
     </div>
     <nuxt-child v-if="this.$route.params.date" />
   </div>
@@ -29,14 +30,18 @@ export default {
 
 <style lang="scss">
 .calender {
-  width: 50vw;
   margin: auto;
   position: relative;
-  h2 { margin: 20px 0; }
+  h4 { margin: 20px 0; }
+  p {
+    margin-top: 12px;
+    text-align: center;
+    color: #555;
+  }
 }
 .fc {
-  width: 400px;
-  margin: auto;
+  width: 350px;
+  margin: 12px auto;
   h2 {
     margin: 0;
     font-size: 20px;
@@ -48,9 +53,7 @@ export default {
   .fc-today-button { display: none; }
   .fc-day, .fc-day-top { cursor: pointer; }
   .fc-content-skeleton { padding: 0 !important; }
-  .fc-body .fc-row {
-    min-height: 0 !important;
-  }
+  .fc-body .fc-row { min-height: 0 !important; }
   .fc-day-number {
     width: 100%;
     padding: 2px 0 !important;

@@ -26,7 +26,6 @@ export default {
 nav {
   position: absolute;
   top: 40%;
-  left: -10%;
   ul {
     list-style: none;
     height: 200px;

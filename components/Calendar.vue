@@ -2,7 +2,7 @@
   <FullCalendar
     default-view="dayGridMonth"
     :plugins="calendarPlugins"
-    :height="400"
+    :height="350"
     :locale="locale"
     @dateClick="goToDatePage"
   />

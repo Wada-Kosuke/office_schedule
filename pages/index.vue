@@ -1,7 +1,7 @@
 <template>
-  <div class="selectGroup">
+  <div class="selectGroup col-md-6">
     <div class="groupList">
-      <h3 class="title">グループを選択</h3>
+      <h4 class="title">グループを選択</h4>
       <ul class="list">
         <li v-for="group in groups" :key="group.id">
           <nuxt-link :to="group.name + '/' + today">{{ group.name }}</nuxt-link>
@@ -11,7 +11,7 @@
     </div>
     <div class="groupForm">
       <form @submit.prevent="add" class="form">
-        <h4 class="title">グループを追加</h4>
+        <h5 class="title">グループを追加</h5>
         <br>
         <span>グループ名：</span>
         <input v-model="name">
@@ -71,7 +71,6 @@ export default {
 
 <style lang="scss">
 .selectGroup {
-  width: 80%;
   margin: 40px auto;
   .list li {
     padding: 8px 2vw;
@@ -80,10 +79,15 @@ export default {
       color: inherit;
     }
   }
-  .form input {
-    font-size: 16px;
-    padding: 6px;
+  .groupForm {
     width: 80%;
+    margin: 40px auto;
+    // .formはmain.cssを適用
+    .form input {
+      font-size: 16px;
+      padding: 6px;
+      width: 80%;
+    }
   }
 }
 </style>
