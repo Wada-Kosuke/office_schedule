@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="calender">
+      <Nav></Nav>
       <h2 class="title">{{ this.$route.params.group }} のスケジュール</h2>
       <full-calendar></full-calendar>
     </div>
@@ -9,9 +10,14 @@
 </template>
 
 <script>
+import Nav from '~/components/Nav'
+
 export default {
   validate({ params, store }) {
     return store.state.groups.groups.some(group => group.name === params.group)
+  },
+  components: {
+    Nav
   },
   computed: {
     groups() {
@@ -25,6 +31,7 @@ export default {
 .calender {
   width: 50vw;
   margin: auto;
+  position: relative;
   h2 { margin: 20px 0; }
 }
 .fc {
