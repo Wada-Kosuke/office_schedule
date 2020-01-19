@@ -12,7 +12,7 @@
           <span>{{ schedule.event.name }}</span>
           <button @click="remove(schedule.id)">削除</button>
           <br>
-          <span v-if="schedule.event.member" class="member">参加者：{{ schedule.event.member.join(", ") }}</span>
+          <span v-if="schedule.event.member != ''" class="member">参加者：{{ schedule.event.member.join(", ") }}</span>
         </li>
       </ul>
       <h6 v-else>まだ予定はありません</h6>
@@ -67,8 +67,35 @@ export default {
   },
   methods: {
     add() {
-      if ( this.event.name == '' ) {
+      // イベントの内容が空欄でないか
+      if (this.event.name === '') {
         return
+      }
+      // 時間が適切か
+      if (this.event.startTime > this.event.endTime) {
+        alert('時間が適切ではありません')
+        return
+      }
+      // 参加者の時間が重複している時登録するかの処理
+      for (let i = 0; i < this.schedules.length; i++) {
+        const eventStartTime    = this.schedules[i].event.startTime
+        const eventEndTime      = this.schedules[i].event.endTime
+        const newEventStartTime = this.event.startTime
+        const newEventEndTime   = this.event.endTime
+        // 時間が被っているイベントがあるか
+        if (eventStartTime <= newEventEndTime && eventEndTime >= newEventStartTime == true) {
+          const eventMember    = this.schedules[i].event.member
+          const newEventMember = this.event.member
+          // さらに被っているメンバーがいるか
+          if ([...eventMember, ...newEventMember].filter(member =>
+            eventMember.includes(member) && newEventMember.includes(member)).length > 0
+          ) {
+            if (window.confirm('時間が重複しているメンバーがいます。このまま予定を登録してよろしいですか？')
+                  == false) {
+              return
+            }
+          }
+        }
       }
       this.$store.dispatch('schedules/add', this.event)
       this.event = {

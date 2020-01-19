@@ -42,16 +42,17 @@ export default {
       this.name = ''
     },
     remove(id) {
-      window.confirm('削除してよろしいですか？')
-      // 削除するグループのスケジュールもすべて削除
-      const groupSchedules = this.$store.getters['schedules/orderedSchedules'].filter((schedules) => {
-        return schedules.event.group === this.groups.find(group => group.id === id).name
-      })
-      groupSchedules.forEach(function(schedule) {
-        this.$store.dispatch('schedules/remove', schedule.id)
-      }, this)
-      // グループを削除
-      this.$store.dispatch('groups/remove', id)
+      if (window.confirm('削除してよろしいですか？')) {
+        // 削除するグループのスケジュールもすべて削除
+        const groupSchedules = this.$store.getters['schedules/orderedSchedules'].filter(schedules => {
+          return schedules.event.group === this.groups.find(group => group.id === id).name
+        })
+        groupSchedules.forEach(function(schedule) {
+          this.$store.dispatch('schedules/remove', schedule.id)
+        }, this)
+        // グループを削除
+        this.$store.dispatch('groups/remove', id)
+      }
     }
   },
   computed: {
