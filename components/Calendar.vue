@@ -1,9 +1,9 @@
 <template>
+  <!-- :local="locale"　を追加すると日本語化 -->
   <FullCalendar
     default-view="dayGridMonth"
     :plugins="calendarPlugins"
-    :height="350"
-    :locale="locale"
+    :height="280"
     @dateClick="goToDatePage"
   />
 </template>

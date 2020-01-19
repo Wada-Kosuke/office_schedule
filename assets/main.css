@@ -1,3 +1,10 @@
+/* universal */
+a, a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+ul { list-style: none; }
+
 /* button */
 button { font-size: 10px; }
 .button--green {
@@ -16,20 +23,26 @@ button { font-size: 10px; }
 
 /* title */
 .title {
+  margin-bottom: 20px;
   display: inline-block;
   border-bottom: 2px solid #4c9181;
 }
 
 /* list */
 .list {
+  margin: 16px auto;
+  padding: 20px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+}
+.list ul {
   padding: 0;
-  margin: 16px 0;
-  list-style: none;
+  margin: 6px 0;
   border: 1px solid #ddd;
   border-radius: 5px;
 }
 .list li {
-  padding: 6px 0;
+  padding: 8px 2vw;
   font-size: 18px;
   border-radius: 5px;
 }
@@ -39,19 +52,25 @@ button { font-size: 10px; }
 .list li:nth-child(even) {
   background: #F8FFF8;
 }
+.list button { margin-left: 20px }
+.list h6 { margin-left: 2vw; }
 
 /* form */
 .form {
-  margin: 20px auto;
+  margin: 24px auto;
   padding: 20px;
   border: 1px solid #aaa;
   border-radius: 5px;
 }
 .form h4 { margin-bottom: 20px; }
-.form input { margin-bottom: 10px; }
+.form input {
+  margin-bottom: 10px;
+  width: 80%;
+  padding: 4px;
+}
 .form button {
   width: 120px;
-  margin: 20px 0 0 20px;
+  margin: 12px 0 0 20px;
   font-size: 16px;
   padding: 6px;
 }

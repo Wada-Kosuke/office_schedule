@@ -6,7 +6,7 @@
       <full-calendar></full-calendar>
       <p>日付をクリックすると予定が表示されます</p>
     </div>
-    <nuxt-child v-if="this.$route.params.date" />
+    <nuxt-child />
   </div>
 </template>
 
@@ -40,7 +40,7 @@ export default {
   }
 }
 .fc {
-  width: 350px;
+  width: 280px;
   margin: 12px auto;
   h2 {
     margin: 0;
