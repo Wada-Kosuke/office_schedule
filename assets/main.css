@@ -4,6 +4,7 @@ a, a:hover {
   color: inherit;
 }
 ul { list-style: none; }
+p { margin: 0; }
 
 /* button */
 button { font-size: 10px; }

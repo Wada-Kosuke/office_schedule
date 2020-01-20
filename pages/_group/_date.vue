@@ -11,8 +11,12 @@
           </span>
           <span>{{ schedule.event.name }}</span>
           <button @click="remove(schedule.id)">削除</button>
-          <br>
-          <span v-if="schedule.event.member != ''" class="member">参加者：{{ schedule.event.member.join(", ") }}</span>
+          <p v-if="schedule.event.member != ''" class="event-data">
+            参加者：{{ schedule.event.member.join(", ") }}
+          </p>
+          <p v-if="schedule.event.place != ''" class="event-data">
+            場所：{{ schedule.event.place }}
+          </p>
         </li>
       </ul>
       <h6 v-else>まだ予定はありません</h6>
@@ -20,23 +24,34 @@
     <div class="form col-md-6">
       <h5 class="title">予定を追加する</h5>
       <form @submit.prevent="add">
-        <span class="time-form">
+        <div class="time-form">
           <span>時間</span>
           <input v-model="event.startTime" name="startTime" type="time">
           <span>〜</span>
           <input v-model="event.endTime" name="endTime" type="time">
-        </span>
-        <br>
-        <span>内容</span>
-        <input v-model="event.name">
-        <br>
-        <span>参加者</span>
-        <br>
+        </div>
+        <div class="name-form">
+          <span>内容</span>
+          <input v-model="event.name">
+        </div>
         <div class="member-form">
-          <span v-for="member in groupMembers" :key="member.id">
-            <input v-model="event.member" type="checkbox" name="member" :value="member.member.name">
-            <label for="member">{{ member.member.name }}</label>
-          </span>
+          <p>参加者</p>
+          <div>
+            <span v-for="member in groupMembers" :key="member.id">
+              <input v-model="event.member" type="checkbox" name="member" :value="member.member.name">
+              <label for="member">{{ member.member.name }}</label>
+            </span>
+          </div>
+        </div>
+        <div class="place-form">
+          <span>場所</span>
+          <input v-model="event.place"><br>
+          <span class="select">登録した部屋から選択：</span>
+          <select v-model="event.place">
+            <option v-for="room in groupRooms" :key="room.id" :value="room.room.name">
+              {{ room.room.name }}
+            </option>
+          </select>
         </div>
         <button class="button--green">追加</button>
       </form>
@@ -54,7 +69,8 @@ export default {
         startTime: '',
         endTime: '',
         name: '',
-        member: []
+        member: [],
+        place: ''
       }
     }
   },
@@ -64,6 +80,7 @@ export default {
   created: function() {
     this.$store.dispatch('schedules/init')
     this.$store.dispatch('members/init')
+    this.$store.dispatch('rooms/init')
   },
   methods: {
     add() {
@@ -71,28 +88,36 @@ export default {
       if (this.event.name === '') {
         return
       }
-      // 時間が適切か
+      // 開始時刻より終了時刻が小さい場合はreturn
       if (this.event.startTime > this.event.endTime) {
         alert('時間が適切ではありません')
         return
       }
-      // 参加者の時間が重複している時登録するかの処理
+      // 参加者の時間、場所、アイテムの重複確認の処理
       for (let i = 0; i < this.schedules.length; i++) {
         const eventStartTime    = this.schedules[i].event.startTime
         const eventEndTime      = this.schedules[i].event.endTime
         const newEventStartTime = this.event.startTime
         const newEventEndTime   = this.event.endTime
-        // 時間が被っているイベントがあるか
+        // 時間が重複しているイベントがあるか
         if (eventStartTime <= newEventEndTime && eventEndTime >= newEventStartTime == true) {
           const eventMember    = this.schedules[i].event.member
           const newEventMember = this.event.member
-          // さらに被っているメンバーがいるか
-          if ([...eventMember, ...newEventMember].filter(member =>
-            eventMember.includes(member) && newEventMember.includes(member)).length > 0
-          ) {
+          // 場所が重複しているイベントがないか
+          if (this.event.place == this.schedules[i].event.place) {
+            if (window.confirm('場所が重複しているイベントがあります。このまま予定を登録してよろしいですか？')
+                  == false) {
+              return
+            }
+          }
+          // 被っているメンバーがいないか
+          else if ([...eventMember, ...newEventMember].filter(member =>
+            eventMember.includes(member) && newEventMember.includes(member)).length > 0) {
             if (window.confirm('時間が重複しているメンバーがいます。このまま予定を登録してよろしいですか？')
                   == false) {
               return
+            } else {
+              break // 重複しているメンバーが複数いる場合、confirmが人数分出ないようにする処理
             }
           }
         }
@@ -104,7 +129,8 @@ export default {
         startTime: '',
         endTime: '',
         name: '',
-        member: []
+        member: [],
+        place: ''
       }
     },
     remove(id) {
@@ -124,6 +150,11 @@ export default {
       return this.$store.getters['members/orderedMembers'].filter((members) => {
         return (members.member.group === this.$route.params.group)
       })
+    },
+    groupRooms() {
+      return this.$store.getters['rooms/orderedRooms'].filter((rooms) => {
+        return (rooms.room.group === this.$route.params.group)
+      })
     }
   }
 }
@@ -135,7 +166,7 @@ export default {
   font-size: 14px;
   display: inline-block;
 }
-.member {
+.event-data {
   margin-left: 2vw;
   font-size: 14px;
   color: #555;
@@ -145,11 +176,20 @@ export default {
   width: 82px;
 }
 .member-form {
-  margin-left: 2vw;
-  input {
-  width: inherit;
-  height: inherit;
+  > div {
+    margin-left: 2vw;
+    input {
+    width: inherit;
+    height: inherit;
+    }
+    label { margin-right: 12px; }
   }
-  label { margin-right: 12px; }
+}
+.place-form {
+  input { margin-bottom: 6px; }
+  .select {
+    margin-left: 2vw;
+    font-size: 14px;
+  }
 }
 </style>

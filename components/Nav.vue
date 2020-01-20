@@ -2,7 +2,7 @@
   <nav>
     <ul>
       <nuxt-link to="member" tag="li"><b-icon-person-fill></b-icon-person-fill></nuxt-link>
-      <nuxt-link to="/" tag="li"><b-icon-gear-fill></b-icon-gear-fill></nuxt-link>
+      <nuxt-link to="room" tag="li"><b-icon-gear-fill></b-icon-gear-fill></nuxt-link>
       <nuxt-link to="/" tag="li"><b-icon-box-arrow-right></b-icon-box-arrow-right></nuxt-link>
     </ul>
   </nav>
