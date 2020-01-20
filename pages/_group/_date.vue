@@ -17,6 +17,9 @@
           <p v-if="schedule.event.place != ''" class="event-data">
             場所：{{ schedule.event.place }}
           </p>
+          <p v-if="schedule.event.item != ''" class="event-data">
+            {{ schedule.event.item.join(", ") }}を使用
+          </p>
         </li>
       </ul>
       <h6 v-else>まだ予定はありません</h6>
@@ -53,6 +56,15 @@
             </option>
           </select>
         </div>
+        <div class="item-form">
+          <p>アイテム</p>
+          <div>
+            <span v-for="item in groupItems" :key="item.id">
+              <input v-model="event.item" type="checkbox" name="item" :value="item.item.name">
+              <label for="item">{{ item.item.name }}</label>
+            </span>
+          </div>
+        </div>
         <button class="button--green">追加</button>
       </form>
     </div>
@@ -70,7 +82,8 @@ export default {
         endTime: '',
         name: '',
         member: [],
-        place: ''
+        place: '',
+        item: []
       }
     }
   },
@@ -81,6 +94,7 @@ export default {
     this.$store.dispatch('schedules/init')
     this.$store.dispatch('members/init')
     this.$store.dispatch('rooms/init')
+    this.$store.dispatch('items/init')
   },
   methods: {
     add() {
@@ -103,22 +117,28 @@ export default {
         if (eventStartTime <= newEventEndTime && eventEndTime >= newEventStartTime == true) {
           const eventMember    = this.schedules[i].event.member
           const newEventMember = this.event.member
-          // 場所が重複しているイベントがないか
-          if (this.event.place == this.schedules[i].event.place) {
-            if (window.confirm('場所が重複しているイベントがあります。このまま予定を登録してよろしいですか？')
-                  == false) {
-              return
-            }
+          const eventItem      = this.schedules[i].event.item
+          const newEventItem   = this.event.item
+          // メンバーが重複していないか
+          if ([...eventMember, ...newEventMember].filter(member =>
+            eventMember.includes(member) && newEventMember.includes(member)).length > 0
+            && window.confirm(`同時刻の${this.schedules[i].event.name}とメンバーが重複しています。\nこのまま予定を登録してよろしいですか？`)
+              == false) {
+            return
           }
-          // 被っているメンバーがいないか
-          else if ([...eventMember, ...newEventMember].filter(member =>
-            eventMember.includes(member) && newEventMember.includes(member)).length > 0) {
-            if (window.confirm('時間が重複しているメンバーがいます。このまま予定を登録してよろしいですか？')
-                  == false) {
-              return
-            } else {
-              break // 重複しているメンバーが複数いる場合、confirmが人数分出ないようにする処理
-            }
+          // 場所が重複していないか
+          if (this.event.place != '' &&
+            this.event.place == this.schedules[i].event.place &&
+            window.confirm(`同時刻の${this.schedules[i].event.name}と場所が重複しています。このまま予定を登録してよろしいですか？`)
+              == false) {
+            return
+          }
+          // 使用するアイテムが重複していないか
+          if ([...eventItem, ...newEventItem].filter(item =>
+            eventItem.includes(item) && newEventItem.includes(item)).length > 0
+            && window.confirm(`同時刻の${this.schedules[i].event.name}と使用するアイテムが重複しています。\nこのまま予定を登録してよろしいですか？`)
+              == false) {
+            return
           }
         }
       }
@@ -130,7 +150,8 @@ export default {
         endTime: '',
         name: '',
         member: [],
-        place: ''
+        place: '',
+        item: []
       }
     },
     remove(id) {
@@ -155,6 +176,11 @@ export default {
       return this.$store.getters['rooms/orderedRooms'].filter((rooms) => {
         return (rooms.room.group === this.$route.params.group)
       })
+    },
+    groupItems() {
+      return this.$store.getters['items/orderedItems'].filter((items) => {
+        return (items.item.group === this.$route.params.group)
+      })
     }
   }
 }
@@ -175,7 +201,7 @@ export default {
   font-size: 14px;
   width: 82px;
 }
-.member-form {
+.member-form, .item-form {
   > div {
     margin-left: 2vw;
     input {
@@ -186,6 +212,7 @@ export default {
   }
 }
 .place-form {
+  margin-bottom: 6px;
   input { margin-bottom: 6px; }
   .select {
     margin-left: 2vw;

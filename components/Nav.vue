@@ -1,9 +1,10 @@
 <template>
   <nav>
     <ul>
-      <nuxt-link to="member" tag="li"><b-icon-person-fill></b-icon-person-fill></nuxt-link>
-      <nuxt-link to="room" tag="li"><b-icon-gear-fill></b-icon-gear-fill></nuxt-link>
-      <nuxt-link to="/" tag="li"><b-icon-box-arrow-right></b-icon-box-arrow-right></nuxt-link>
+      <nuxt-link to="member" tag="li">Member</nuxt-link>
+      <nuxt-link to="room" tag="li">Room</nuxt-link>
+      <nuxt-link to="item" tag="li">Item</nuxt-link>
+      <nuxt-link to="/" tag="li">Exit</nuxt-link>
     </ul>
   </nav>
 </template>
@@ -29,7 +30,7 @@ nav {
   ul {
     height: 200px;
     li {
-      font-size: 36px;
+      font-size: 20px;
       cursor: pointer;
       margin-bottom: 10px;
     }

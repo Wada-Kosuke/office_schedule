@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="list col-md-6">
-      <h5 class="title">{{ this.$route.params.group }} の使用できる部屋</h5>
+      <h5 class="title">{{ this.$route.params.group }} の部屋</h5>
+      <p class="describe">会議室など、使用できる部屋を登録してください</p>
       <ul v-if="this.rooms != ''">
         <li v-for="room in rooms" :key="room.id">
           <span>{{ room.room.name }}</span>

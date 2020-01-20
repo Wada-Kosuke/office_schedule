@@ -2,6 +2,7 @@
   <div>
     <div class="list col-md-6">
       <h5 class="title">{{ this.$route.params.group }} のメンバー</h5>
+      <p class="describe">グループのメンバーを登録してください</p>
       <ul v-if="this.members != ''">
         <li v-for="member in members" :key="member.id">
           <span>{{ member.member.name }}</span>
