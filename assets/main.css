@@ -48,7 +48,7 @@ button { font-size: 10px; }
   border-radius: 5px;
 }
 .list li {
-  padding: 8px 2vw;
+  padding: 8px 28px;
   font-size: 18px;
   border-radius: 5px;
 }
@@ -58,7 +58,7 @@ button { font-size: 10px; }
 .list li:nth-child(even) {
   background: #F8FFF8;
 }
-.list button { margin-left: 20px }
+.list button { margin-left: 20px; }
 .list h6 { margin-left: 2vw; }
 
 /* form */

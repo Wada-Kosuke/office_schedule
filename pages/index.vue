@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="list col-md-6">
+    <div class="list col-lg-6">
       <h4 class="title">グループを選択</h4>
       <ul>
         <li v-for="group in groups" :key="group.id">
@@ -9,7 +9,7 @@
         </li>
       </ul>
     </div>
-    <div class="form col-md-5">
+    <div class="form col-lg-5">
       <form @submit.prevent="add">
         <h5 class="title">グループを追加</h5>
         <br>

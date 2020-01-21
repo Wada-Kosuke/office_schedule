@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="list col-md-6">
+    <div class="list col-lg-6">
       <h5 class="title">{{ this.$route.params.group }} のメンバー</h5>
       <p class="describe">グループのメンバーを登録してください</p>
       <ul v-if="this.members != ''">
@@ -11,7 +11,7 @@
       </ul>
       <h6 v-else>まだメンバーはいません</h6>
     </div>
-    <div class="form col-md-5">
+    <div class="form col-lg-5">
       <form @submit.prevent="add">
         <h5 class="title">メンバーを追加</h5>
         <br>

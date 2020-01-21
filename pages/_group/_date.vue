@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="list col-md-8">
+    <div class="list col-lg-8">
       <h5 class="title">{{ this.$route.params.date }} の予定</h5>
       <ul v-if="this.schedules != ''" class="list">
         <li v-for="schedule in schedules" :key="schedule.id">
@@ -24,7 +24,7 @@
       </ul>
       <h6 v-else>まだ予定はありません</h6>
     </div>
-    <div class="form col-md-6">
+    <div class="form col-lg-6">
       <h5 class="title">予定を追加する</h5>
       <form @submit.prevent="add">
         <div class="time-form">
@@ -204,9 +204,10 @@ export default {
 .member-form, .item-form {
   > div {
     margin-left: 2vw;
+    span { display: inline-block; }
     input {
-    width: inherit;
-    height: inherit;
+      width: inherit;
+      height: inherit;
     }
     label { margin-right: 12px; }
   }

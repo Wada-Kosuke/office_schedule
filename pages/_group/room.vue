@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="list col-md-6">
+    <div class="list col-lg-6">
       <h5 class="title">{{ this.$route.params.group }} の部屋</h5>
       <p class="describe">会議室など、使用できる部屋を登録してください</p>
       <ul v-if="this.rooms != ''">
@@ -11,7 +11,7 @@
       </ul>
       <h6 v-else>まだ登録されている部屋はありません</h6>
     </div>
-    <div class="form col-md-5">
+    <div class="form col-lg-5">
       <form @submit.prevent="add">
         <h5 class="title">部屋を追加</h5>
         <br>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="calender col-md-6">
+    <div class="calender col-lg-6">
       <Nav></Nav>
       <h4 class="title">{{ this.$route.params.group }} のスケジュール</h4>
       <full-calendar></full-calendar>
