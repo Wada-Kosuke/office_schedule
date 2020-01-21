@@ -9,20 +9,6 @@
   </nav>
 </template>
 
-<script>
-import { BIcon, BIconPersonFill, BIconGearFill, BIconBoxArrowRight } from 'bootstrap-vue'
-
-export default {
-  components: {
-    BIcon,
-    BIconPersonFill,
-    BIconGearFill,
-    BIconBoxArrowRight
-  }
-}
-
-</script>
-
 <style lang="scss">
 nav {
   position: absolute;

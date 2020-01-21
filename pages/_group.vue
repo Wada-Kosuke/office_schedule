@@ -42,6 +42,7 @@ export default {
 .fc {
   width: 280px;
   margin: 12px auto;
+  user-select: none;
   h2 {
     margin: 0;
     font-size: 20px;

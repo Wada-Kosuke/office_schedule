@@ -122,21 +122,21 @@ export default {
           // メンバーが重複していないか
           if ([...eventMember, ...newEventMember].filter(member =>
             eventMember.includes(member) && newEventMember.includes(member)).length > 0
-            && window.confirm(`同時刻の${this.schedules[i].event.name}とメンバーが重複しています。\nこのまま予定を登録してよろしいですか？`)
+            && window.confirm(`${this.schedules[i].event.name}とメンバーが重複しています。\nこのまま予定を登録してよろしいですか？`)
               == false) {
             return
           }
           // 場所が重複していないか
           if (this.event.place != '' &&
             this.event.place == this.schedules[i].event.place &&
-            window.confirm(`同時刻の${this.schedules[i].event.name}と場所が重複しています。このまま予定を登録してよろしいですか？`)
+            window.confirm(`${this.schedules[i].event.name}と場所が重複しています。このまま予定を登録してよろしいですか？`)
               == false) {
             return
           }
           // 使用するアイテムが重複していないか
           if ([...eventItem, ...newEventItem].filter(item =>
             eventItem.includes(item) && newEventItem.includes(item)).length > 0
-            && window.confirm(`同時刻の${this.schedules[i].event.name}と使用するアイテムが重複しています。\nこのまま予定を登録してよろしいですか？`)
+            && window.confirm(`${this.schedules[i].event.name}と使用するアイテムが重複しています。\nこのまま予定を登録してよろしいですか？`)
               == false) {
             return
           }
@@ -155,7 +155,9 @@ export default {
       }
     },
     remove(id) {
-      this.$store.dispatch('schedules/remove', id)
+      if (window.confirm('削除してよろしいですか？')) {
+        this.$store.dispatch('schedules/remove', id)
+      }
     }
   },
   computed: {
@@ -219,5 +221,9 @@ export default {
     margin-left: 2vw;
     font-size: 14px;
   }
+}
+
+@media screen and (max-width: 540px) {
+  .event-time { width: 100%; }
 }
 </style>
