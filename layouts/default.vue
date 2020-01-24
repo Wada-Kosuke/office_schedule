@@ -38,4 +38,8 @@ html {
   color: #fff;
   background-color: #35495e;
 }
+
+@media screen and (max-width: 993px) {
+  .container-fluid { user-select: none; }
+}
 </style>

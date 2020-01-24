@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div class="describe">
+      <p>グループのスケジュールを管理するwebアプリです。</p>
+      <p>各メンバーの予定のほか、会議室や社用車など共用のアイテムの管理も行えます。</p>
+    </div>
     <div class="list col-lg-6">
       <h4 class="title">グループを選択</h4>
       <ul>
@@ -70,7 +74,11 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.describe {
+  text-align: center;
+  margin-top: 30px;
+}
 .groupList {
   margin: 40px auto 20px;
 }

@@ -1,54 +1,54 @@
 <template>
-  <nav>
+  <nav class="col-lg-6">
     <ul>
-      <nuxt-link to="member" tag="li">Member</nuxt-link>
-      <nuxt-link to="room" tag="li">Room</nuxt-link>
-      <nuxt-link to="item" tag="li">Item</nuxt-link>
-      <nuxt-link to="/" tag="li">Exit</nuxt-link>
+      <nuxt-link :to="today" tag="li"><b-icon-calendar></b-icon-calendar> Schedule</nuxt-link>
+      <nuxt-link to="member" tag="li"><b-icon-person-fill></b-icon-person-fill> Member</nuxt-link>
+      <nuxt-link to="room" tag="li"><b-icon-building></b-icon-building> Room</nuxt-link>
+      <nuxt-link to="item" tag="li"><b-icon-tools></b-icon-tools> Item</nuxt-link>
+      <nuxt-link to="/" tag="li"><b-icon-box-arrow-right></b-icon-box-arrow-right> Exit</nuxt-link>
     </ul>
   </nav>
 </template>
 
-<style lang="scss">
-nav {
-  position: absolute;
-  top: 40%;
-  ul {
-    height: 200px;
-    padding: 0;
-    li {
-      font-size: 20px;
-      cursor: pointer;
-      margin-bottom: 10px;
+<script>
+import {
+  BIcon, BIconCalendar, BIconPersonFill, BIconBuilding, BIconTools, BIconBoxArrowRight
+} from 'bootstrap-vue'
+
+export default {
+  components: {
+    BIcon, BIconCalendar, BIconPersonFill, BIconBuilding, BIconTools, BIconBoxArrowRight
+  },
+  computed: {
+    today() {
+      let date = new Date();
+      let y = date.getFullYear();
+      let m = ("00" + (date.getMonth()+1)).slice(-2);
+      let d = ("00" + date.getDate()).slice(-2);
+      return y + '-' + m + '-' + d;
     }
   }
 }
+</script>
 
-@media screen and (max-width: 993px) {
-  nav { left: 15%; }
-}
-@media screen and (max-width: 720px) {
-  nav {
-    position: static;
-    ul {
-      margin-top: 20px;
-      height: inherit;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      flex-wrap: wrap;
-      li {
-        padding: 8px 0;
-        border: 1px solid #555;
-        color: #555;
-        border-radius: 4px;
-        width: 110px;
-        text-align: center;
+<style lang="scss">
+nav {
+  margin: 30px auto;
+  ul {
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    li {
+      cursor: pointer;
+      margin: 8px;
+      color: #444;
+      svg{
+        font-size: 24px;
+        color: #3b8070;
       }
     }
   }
-}
-@media screen and (max-width: 540px) {
-  nav ul li { width: 40%; }
 }
 </style>

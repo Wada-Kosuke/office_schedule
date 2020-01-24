@@ -1,6 +1,10 @@
 <template>
   <div>
-    <div class="list col-lg-8">
+    <div class="calender col-lg-6">
+      <full-calendar></full-calendar>
+      <p>日付をクリックすると予定が表示されます</p>
+    </div>
+    <div class="list col-lg-8" id="target">
       <h5 class="title">{{ this.$route.params.date }} の予定</h5>
       <ul v-if="this.schedules != ''" class="list">
         <li v-for="schedule in schedules" :key="schedule.id">
@@ -28,17 +32,17 @@
       <h5 class="title">予定を追加する</h5>
       <form @submit.prevent="add">
         <div class="time-form">
-          <span>時間</span>
+          <span class="form-label">時間</span>
           <input v-model="event.startTime" name="startTime" type="time">
           <span>〜</span>
           <input v-model="event.endTime" name="endTime" type="time">
         </div>
         <div class="name-form">
-          <span>内容</span>
+          <span class="form-label">内容</span>
           <input v-model="event.name">
         </div>
         <div class="member-form">
-          <p>参加者</p>
+          <span class="form-label">参加者</span>
           <div>
             <span v-for="member in groupMembers" :key="member.id">
               <input v-model="event.member" type="checkbox" name="member" :value="member.member.name">
@@ -47,7 +51,7 @@
           </div>
         </div>
         <div class="place-form">
-          <span>場所</span>
+          <span class="form-label">場所</span>
           <input v-model="event.place"><br>
           <span class="select">登録した部屋から選択：</span>
           <select v-model="event.place">
@@ -57,7 +61,7 @@
           </select>
         </div>
         <div class="item-form">
-          <p>アイテム</p>
+          <span class="form-label">アイテム</span>
           <div>
             <span v-for="item in groupItems" :key="item.id">
               <input v-model="event.item" type="checkbox" name="item" :value="item.item.name">
@@ -225,5 +229,39 @@ export default {
 
 @media screen and (max-width: 540px) {
   .event-time { width: 100%; }
+}
+
+// calendar
+.calender {
+  margin: auto;
+  position: relative;
+  h4 { margin: 20px 0; }
+  p {
+    margin-top: 12px;
+    text-align: center;
+    color: #555;
+  }
+}
+.fc {
+  width: 280px;
+  margin: 12px auto;
+  user-select: none;
+  h2 {
+    margin: 0;
+    font-size: 20px;
+  }
+  button {
+    height: 30px;
+    padding: 0 8px;
+  }
+  .fc-today-button { display: none; }
+  .fc-day, .fc-day-top { cursor: pointer; }
+  .fc-content-skeleton { padding: 0 !important; }
+  .fc-body .fc-row { min-height: 0 !important; }
+  .fc-day-number {
+    width: 100%;
+    padding: 2px 0 !important;
+    text-align: center;
+  }
 }
 </style>

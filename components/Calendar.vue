@@ -32,6 +32,7 @@ export default {
   },
   methods: {
     goToDatePage (arg) {
+      document.getElementById("target").scrollIntoView(true)
       this.$router.push({
         name: 'group-date',
         params: { date: arg.dateStr }
