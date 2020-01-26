@@ -113,19 +113,19 @@ export default {
       }
       // 参加者の時間、場所、アイテムの重複確認の処理
       for (let i = 0; i < this.schedules.length; i++) {
-        const eventStartTime    = this.schedules[i].event.startTime
-        const eventEndTime      = this.schedules[i].event.endTime
-        const newEventStartTime = this.event.startTime
-        const newEventEndTime   = this.event.endTime
+        const existingEventStartTime    = this.schedules[i].event.startTime
+        const existingEventEndTime      = this.schedules[i].event.endTime
+        const newEventStartTime         = this.event.startTime
+        const newEventEndTime           = this.event.endTime
         // 時間が重複しているイベントがあるか
-        if (eventStartTime <= newEventEndTime && eventEndTime >= newEventStartTime == true) {
-          const eventMember    = this.schedules[i].event.member
-          const newEventMember = this.event.member
-          const eventItem      = this.schedules[i].event.item
-          const newEventItem   = this.event.item
+        if (existingEventStartTime <= newEventEndTime && existingEventEndTime >= newEventStartTime == true) {
+          const existingEventMember    = this.schedules[i].event.member
+          const newEventMember         = this.event.member
+          const existingEventItem      = this.schedules[i].event.item
+          const newEventItem           = this.event.item
           // メンバーが重複していないか
-          if ([...eventMember, ...newEventMember].filter(member =>
-            eventMember.includes(member) && newEventMember.includes(member)).length > 0
+          if ([...existingEventMember, ...newEventMember].filter(member =>
+            existingEventMember.includes(member) && newEventMember.includes(member)).length > 0
             && window.confirm(`${this.schedules[i].event.name}とメンバーが重複しています。\nこのまま予定を登録してよろしいですか？`)
               == false) {
             return
@@ -133,13 +133,13 @@ export default {
           // 場所が重複していないか
           if (this.event.place != '' &&
             this.event.place == this.schedules[i].event.place &&
-            window.confirm(`${this.schedules[i].event.name}と場所が重複しています。このまま予定を登録してよろしいですか？`)
+            window.confirm(`${this.schedules[i].event.name}と場所が重複しています。\nこのまま予定を登録してよろしいですか？`)
               == false) {
             return
           }
           // 使用するアイテムが重複していないか
-          if ([...eventItem, ...newEventItem].filter(item =>
-            eventItem.includes(item) && newEventItem.includes(item)).length > 0
+          if ([...existingEventItem, ...newEventItem].filter(item =>
+            existingEventItem.includes(item) && newEventItem.includes(item)).length > 0
             && window.confirm(`${this.schedules[i].event.name}と使用するアイテムが重複しています。\nこのまま予定を登録してよろしいですか？`)
               == false) {
             return

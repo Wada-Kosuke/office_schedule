@@ -1,5 +1,4 @@
 <template>
-  <!-- :local="locale"　を追加すると日本語化 -->
   <FullCalendar
     default-view="dayGridMonth"
     :plugins="calendarPlugins"
@@ -33,8 +32,10 @@ export default {
   methods: {
     goToDatePage (arg) {
       document.getElementById("target").scrollIntoView(true)
-      document.getElementsByClassName('fc-today')[0].classList.remove("fc-today")
-      arg.dayEl.classList.add("fc-today")
+      const beforeDate = document.getElementsByClassName('fc-today')[0]
+      const clickedDate = arg.dayEl
+      beforeDate.classList.remove("fc-today")
+      clickedDate.classList.add("fc-today")
       this.$router.push({
         name: 'group-date',
         params: { date: arg.dateStr }
