@@ -157,6 +157,7 @@ export default {
         place: '',
         item: []
       }
+      document.getElementById("target").scrollIntoView(true)
     },
     remove(id) {
       if (window.confirm('削除してよろしいですか？')) {

@@ -31,7 +31,6 @@ export default {
   },
   methods: {
     goToDatePage (arg) {
-      document.getElementById("target").scrollIntoView(true)
       const beforeDate = document.getElementsByClassName('fc-today')[0]
       const clickedDate = arg.dayEl
       beforeDate.classList.remove("fc-today")
@@ -40,6 +39,7 @@ export default {
         name: 'group-date',
         params: { date: arg.dateStr }
       })
+      document.getElementById("target").scrollIntoView(true)
     }
   }
 }

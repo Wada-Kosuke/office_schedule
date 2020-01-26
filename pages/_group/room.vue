@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="list col-lg-6">
+    <div class="list col-lg-6" id="target">
       <h5 class="title">{{ this.$route.params.group }} の部屋</h5>
       <p class="describe">会議室など、使用できる部屋を登録してください</p>
       <ul v-if="this.rooms != ''">
@@ -44,6 +44,7 @@ export default {
       }
       this.$store.dispatch('rooms/add', this.room)
       this.room.name = ''
+      document.getElementById("target").scrollIntoView(true)
     },
     remove(id) {
       this.$store.dispatch('rooms/remove', id)

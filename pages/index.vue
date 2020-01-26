@@ -2,9 +2,9 @@
   <div>
     <div class="describe">
       <p>グループのスケジュールを管理するwebアプリです。</p>
-      <p>ダブルブッキングが起こらないよう、他の予定とメンバー等が重複する場合には確認ダイアログを表示するようにしてあります。</p>
+      <p>予定登録時、ダブルブッキングにならないように内容に応じて確認ダイアログを表示するようにしています。</p>
     </div>
-    <div class="list col-lg-6">
+    <div class="list col-lg-6" id="target">
       <h4 class="title">グループを選択</h4>
       <ul>
         <li v-for="group in groups" :key="group.id">
@@ -22,6 +22,13 @@
         <br>
         <button class="button--green">追加</button>
       </form>
+    </div>
+    <div class="col-lg-10 example">
+      <h4>サンプル画像</h4>
+      <div>
+        <img src="~/assets/image/example1.png">
+        <img src="~/assets/image/example2.png">
+      </div>
     </div>
   </div>
 </template>
@@ -44,6 +51,7 @@ export default {
       }
       this.$store.dispatch('groups/add', this.name)
       this.name = ''
+      document.getElementById("target").scrollIntoView(true)
     },
     remove(id) {
       if (window.confirm('削除してよろしいですか？')) {
@@ -81,5 +89,30 @@ export default {
 }
 .groupList {
   margin: 40px auto 20px;
+}
+.example {
+  margin: 50px auto;
+  h4 { color: #777; }
+  div {
+    width: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    img {
+      width: 49%;
+      margin: 20px 0;
+      border: 1px solid #777;
+      border-radius: 40px;
+      padding: 20px;
+    }
+  }
+}
+@media screen and (max-width: 993px) {
+  .example {
+    div {
+      flex-direction: column;
+      img { width: 100%; }
+    }
+  }
 }
 </style>

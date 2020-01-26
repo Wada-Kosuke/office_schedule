@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="list col-lg-6">
+    <div class="list col-lg-6" id="target">
       <h5 class="title">{{ this.$route.params.group }} の使用できるアイテム</h5>
       <p class="describe">パソコンや社用車など、共用のアイテムを登録してください</p>
       <ul v-if="this.items != ''">
@@ -44,6 +44,7 @@ export default {
       }
       this.$store.dispatch('items/add', this.item)
       this.item.name = ''
+      document.getElementById("target").scrollIntoView(true)
     },
     remove(id) {
       this.$store.dispatch('items/remove', id)

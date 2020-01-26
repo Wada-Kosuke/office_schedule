@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="list col-lg-6">
+    <div class="list col-lg-6" id="target">
       <h5 class="title">{{ this.$route.params.group }} のメンバー</h5>
       <p class="describe">グループのメンバーを登録してください</p>
       <ul v-if="this.members != ''">
@@ -44,6 +44,7 @@ export default {
       }
       this.$store.dispatch('members/add', this.member)
       this.member.name = ''
+      document.getElementById("target").scrollIntoView(true)
     },
     remove(id) {
       this.$store.dispatch('members/remove', id)
