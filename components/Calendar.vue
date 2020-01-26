@@ -33,10 +33,12 @@ export default {
   methods: {
     goToDatePage (arg) {
       document.getElementById("target").scrollIntoView(true)
+      document.getElementsByClassName('fc-today')[0].classList.remove("fc-today")
+      arg.dayEl.classList.add("fc-today")
       this.$router.push({
         name: 'group-date',
         params: { date: arg.dateStr }
-      });
+      })
     }
   }
 }
