@@ -35,6 +35,12 @@ p { margin: 0; }
 .page-enter, .page-leave-active {
   opacity: 0;
 }
+.modal-enter-active, .modal-leave-active {
+  transition: opacity 0.3s;
+}
+.modal-enter, .modal-leave-active {
+  opacity: 0;
+}
 
 /* button */
 button { font-size: 10px; }

@@ -5,7 +5,7 @@
       <p class="describe">パソコンや社用車など、共用のアイテムを登録してください</p>
       <ul v-if="this.items != ''">
         <li v-for="item in items" :key="item.id">
-          <span>{{ item.item.name }}</span>
+          <span @click="show(item.item.name)">{{ item.item.name }}</span>
           <button @click="remove(item.id)">削除</button>
         </li>
       </ul>
@@ -21,19 +21,30 @@
         <button class="button--green">追加</button>
       </form>
     </div>
+    <transition name="modal">
+      <ItemSchedule
+      v-if="showAbout"
+      :name=showAbout
+      @close="close"
+      ></ItemSchedule>
+    </transition>
   </div>
 </template>
 
 <script>
+import ItemSchedule from '~/components/ItemSchedule'
+
 export default {
   data: function() {
     return {
       item: {
         name: '',
         group: this.$route.params.group
-      }
+      },
+      showAbout: ''
     }
   },
+  components: {ItemSchedule},
   created: function() {
     this.$store.dispatch('items/init')
   },
@@ -48,6 +59,12 @@ export default {
     },
     remove(id) {
       this.$store.dispatch('items/remove', id)
+    },
+    show(name) {
+      this.showAbout = name
+    },
+    close() {
+      this.showAbout = ''
     }
   },
   computed: {

@@ -195,7 +195,7 @@ export default {
 
 <style lang="scss">
 .event-time {
-  width: 120px;
+  margin-right: 24px;
   font-size: 14px;
   display: inline-block;
 }
