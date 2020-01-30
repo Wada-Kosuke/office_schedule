@@ -22,18 +22,18 @@
       </form>
     </div>
     <transition name="modal">
-      <ItemSchedule
+      <ScheduleModal
         v-if="showAbout"
         attr="member"
         :name=showAbout
         @close="close"
-      ></ItemSchedule>
+      ></ScheduleModal>
     </transition>
   </div>
 </template>
 
 <script>
-import ItemSchedule from '~/components/ItemSchedule'
+import ScheduleModal from '~/components/ScheduleModal'
 
 export default {
   data: function() {
@@ -46,7 +46,7 @@ export default {
     }
   },
   components: {
-    ItemSchedule
+    ScheduleModal
   },
   created: function() {
     this.$store.dispatch('members/init')

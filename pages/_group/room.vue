@@ -5,7 +5,7 @@
       <p class="describe">会議室など、使用できる部屋を登録してください</p>
       <ul v-if="this.rooms != ''">
         <li v-for="room in rooms" :key="room.id">
-          <span>{{ room.room.name }}</span>
+          <span @click="show(room.room.name)">{{ room.room.name }}</span>
           <button @click="remove(room.id)">削除</button>
         </li>
       </ul>
@@ -21,18 +21,32 @@
         <button class="button--green">追加</button>
       </form>
     </div>
+    <transition name="modal">
+      <ScheduleModal
+        v-if="showAbout"
+        attr="room"
+        :name=showAbout
+        @close="close"
+      ></ScheduleModal>
+    </transition>
   </div>
 </template>
 
 <script>
+import ScheduleModal from '~/components/ScheduleModal'
+
 export default {
   data: function() {
     return {
       room: {
         name: '',
         group: this.$route.params.group
-      }
+      },
+      showAbout: ''
     }
+  },
+  components: {
+    ScheduleModal
   },
   created: function() {
     this.$store.dispatch('rooms/init')
@@ -48,6 +62,12 @@ export default {
     },
     remove(id) {
       this.$store.dispatch('rooms/remove', id)
+    },
+    show(name) {
+      this.showAbout = name
+    },
+    close() {
+      this.showAbout = ''
     }
   },
   computed: {

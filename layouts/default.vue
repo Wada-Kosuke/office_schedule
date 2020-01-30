@@ -70,6 +70,9 @@ button { font-size: 10px; }
   margin: -12px 0 12px 1vw;
   color: #555;
   font-size: 14px;
+  & + ul li span {
+    cursor: pointer;
+  }
 }
 
 /* list */

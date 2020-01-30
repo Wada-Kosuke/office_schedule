@@ -1,9 +1,10 @@
 <template>
   <div @click="close" class="modal-bg">
     <div class="list schedule-modal col-lg-6 col-10">
-      <h5 class="title">{{ name }} の使用予定</h5>
-      <ul v-if="itemSchedule  != ''">
-        <li v-for="schedule in itemSchedule" :key="schedule.id"">
+      <h5 v-if="attr == 'member'" class="title">{{ name }} のスケジュール</h5>
+      <h5 v-else class="title">{{ name }} の使用予定</h5>
+      <ul v-if="schedules != ''">
+        <li v-for="schedule in schedules" :key="schedule.id"">
           <div class="event-time">
             <span class="date">{{ schedule.event.date }}</span>
             <span>{{ schedule.event.startTime }}</span>
@@ -27,7 +28,7 @@ export default {
     }
   },
   computed: {
-    itemSchedule() {
+    schedules() {
       switch (this.attr) {
         case "item":
           return this.$store.getters['schedules/orderedSchedules'].filter((schedule) => {
@@ -40,6 +41,13 @@ export default {
           return this.$store.getters['schedules/orderedSchedules'].filter((schedule) => {
             return (
               schedule.event.member.some(name => name == this.name)
+            )
+          })
+          break;
+        case "room":
+          return this.$store.getters['schedules/orderedSchedules'].filter((schedule) => {
+            return (
+              schedule.event.place == this.name
             )
           })
           break;
