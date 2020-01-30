@@ -107,7 +107,7 @@ export default {
         return
       }
       // 開始時刻より終了時刻が小さい場合はreturn
-      if (this.event.startTime > this.event.endTime) {
+      if (this.event.endTime && this.event.startTime > this.event.endTime) {
         alert('時間が適切ではありません')
         return
       }

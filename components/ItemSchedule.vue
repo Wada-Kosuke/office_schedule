@@ -2,7 +2,7 @@
   <div @click="close" class="modal-bg">
     <div class="list schedule-modal col-lg-6 col-10">
       <h5 class="title">{{ name }} の使用予定</h5>
-      <ul v-if="itemSchedule != ''">
+      <ul v-if="itemSchedule  != ''">
         <li v-for="schedule in itemSchedule" :key="schedule.id"">
           <div class="event-time">
             <span class="date">{{ schedule.event.date }}</span>
@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  props: ["name"],
+  props: ["attr", "name"],
   methods: {
     close() {
       this.$emit('close')
@@ -28,11 +28,22 @@ export default {
   },
   computed: {
     itemSchedule() {
-      return this.$store.getters['schedules/orderedSchedules'].filter((schedule) => {
-        return (
-          schedule.event.item.some(name => name == this.name)
-        )
-      })
+      switch (this.attr) {
+        case "item":
+          return this.$store.getters['schedules/orderedSchedules'].filter((schedule) => {
+            return (
+              schedule.event.item.some(name => name == this.name)
+            )
+          })
+          break;
+        case "member":
+          return this.$store.getters['schedules/orderedSchedules'].filter((schedule) => {
+            return (
+              schedule.event.member.some(name => name == this.name)
+            )
+          })
+          break;
+      }
     }
   }
 }
@@ -45,7 +56,7 @@ export default {
   left: 0;
   background: rgba(0, 0, 0, 0.3);
   width: 100%;
-  height: 100vh;
+  height: 100%;
   .schedule-modal {
     margin-top: 80px;
     background: #fff;

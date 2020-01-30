@@ -5,7 +5,7 @@
       <p class="describe">グループのメンバーを登録してください</p>
       <ul v-if="this.members != ''">
         <li v-for="member in members" :key="member.id">
-          <span>{{ member.member.name }}</span>
+          <span @click="show(member.member.name)">{{ member.member.name }}</span>
           <button @click="remove(member.id)">削除</button>
         </li>
       </ul>
@@ -21,18 +21,32 @@
         <button class="button--green">追加</button>
       </form>
     </div>
+    <transition name="modal">
+      <ItemSchedule
+        v-if="showAbout"
+        attr="member"
+        :name=showAbout
+        @close="close"
+      ></ItemSchedule>
+    </transition>
   </div>
 </template>
 
 <script>
+import ItemSchedule from '~/components/ItemSchedule'
+
 export default {
   data: function() {
     return {
       member: {
         name: '',
         group: this.$route.params.group
-      }
+      },
+      showAbout: ''
     }
+  },
+  components: {
+    ItemSchedule
   },
   created: function() {
     this.$store.dispatch('members/init')
@@ -48,6 +62,12 @@ export default {
     },
     remove(id) {
       this.$store.dispatch('members/remove', id)
+    },
+    show(name) {
+      this.showAbout = name
+    },
+    close() {
+      this.showAbout = ''
     }
   },
   computed: {

@@ -23,9 +23,10 @@
     </div>
     <transition name="modal">
       <ItemSchedule
-      v-if="showAbout"
-      :name=showAbout
-      @close="close"
+        v-if="showAbout"
+        attr="item"
+        :name=showAbout
+        @close="close"
       ></ItemSchedule>
     </transition>
   </div>
@@ -44,7 +45,9 @@ export default {
       showAbout: ''
     }
   },
-  components: {ItemSchedule},
+  components: {
+    ItemSchedule
+  },
   created: function() {
     this.$store.dispatch('items/init')
   },
