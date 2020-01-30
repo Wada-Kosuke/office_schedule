@@ -1,19 +1,19 @@
 <template>
   <nav class="col-lg-6">
     <ul>
-      <nuxt-link :to="today" tag="li" active-class="title">
+      <nuxt-link :to="today" tag="li" active-class="active">
         <b-icon-calendar></b-icon-calendar> Schedule
       </nuxt-link>
-      <nuxt-link to="member" tag="li" active-class="title">
+      <nuxt-link to="member" tag="li" active-class="active">
         <b-icon-person-fill></b-icon-person-fill> Member
       </nuxt-link>
-      <nuxt-link to="room" tag="li" active-class="title">
+      <nuxt-link to="room" tag="li" active-class="active">
         <b-icon-building></b-icon-building> Room
       </nuxt-link>
-      <nuxt-link to="item" tag="li" active-class="title">
+      <nuxt-link to="item" tag="li" active-class="active">
         <b-icon-tools></b-icon-tools> Item
       </nuxt-link>
-      <nuxt-link to="/" tag="li" active-class="title" exact>
+      <nuxt-link to="/" tag="li" active-class="active" exact>
         <b-icon-box-arrow-right></b-icon-box-arrow-right> Exit
       </nuxt-link>
     </ul>
@@ -54,11 +54,9 @@ nav {
       cursor: pointer;
       margin: 8px;
       color: #444;
-      svg{
-        font-size: 24px;
-        color: #3b8070;
-      }
+      svg { font-size: 24px; }
     }
   }
+  .active { color: #3b8070; }
 }
 </style>
