@@ -29,29 +29,31 @@ export default {
   },
   computed: {
     schedules() {
+      let schedules
       switch (this.attr) {
         case "item":
-          return this.$store.getters['schedules/orderedSchedules'].filter((schedule) => {
+          schedules = this.$store.getters['schedules/orderedSchedules'].filter((schedule) => {
             return (
               schedule.event.item.some(name => name == this.name)
             )
           })
           break;
         case "member":
-          return this.$store.getters['schedules/orderedSchedules'].filter((schedule) => {
+          schedules = this.$store.getters['schedules/orderedSchedules'].filter((schedule) => {
             return (
               schedule.event.member.some(name => name == this.name)
             )
           })
           break;
         case "room":
-          return this.$store.getters['schedules/orderedSchedules'].filter((schedule) => {
+          schedules = this.$store.getters['schedules/orderedSchedules'].filter((schedule) => {
             return (
               schedule.event.place == this.name
             )
           })
           break;
       }
+      return _.sortBy(schedules, 'event.date')
     }
   }
 }
