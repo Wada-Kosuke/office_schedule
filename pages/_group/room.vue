@@ -73,7 +73,7 @@ export default {
   computed: {
     rooms() {
       return this.$store.getters['rooms/orderedRooms'].filter((rooms) => {
-        return (rooms.room.group === this.$route.params.group)
+        return (rooms.room.group == this.$route.params.group)
       })
     }
   }

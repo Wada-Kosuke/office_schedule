@@ -73,7 +73,7 @@ export default {
   computed: {
     members() {
       return this.$store.getters['members/orderedMembers'].filter((members) => {
-        return (members.member.group === this.$route.params.group)
+        return (members.member.group == this.$route.params.group)
       })
     }
   }

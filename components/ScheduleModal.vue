@@ -1,20 +1,24 @@
 <template>
-  <div @click="close" class="modal-bg">
-    <div class="list schedule-modal col-lg-6 col-10">
-      <h5 v-if="attr == 'member'" class="title">{{ name }} のスケジュール</h5>
-      <h5 v-else class="title">{{ name }} の使用予定</h5>
-      <ul v-if="schedules != ''">
-        <li v-for="schedule in schedules" :key="schedule.id"">
-          <div class="event-time">
-            <span class="date">{{ schedule.event.date }}</span>
-            <span>{{ schedule.event.startTime }}</span>
-            <span v-if="schedule.event.startTime || schedule.event.endTime">〜</span>
-            <span>{{ schedule.event.endTime }}</span>
-          </div>
-          <p>{{ schedule.event.name }}</p>
-        </li>
-      </ul>
-      <h6 v-else>まだ登録されているスケジュールはありません</h6>
+  <div @click="close" class="modal">
+    <div class="list modal-content col-lg-6 col-10">
+      <div class="modal-body">
+        <h5 class="modal-title">
+          <h5 v-if="attr == 'member'" class="title">{{ name }} のスケジュール</h5>
+          <h5 v-else class="title">{{ name }} の使用予定</h5>
+        </h5>
+        <ul v-if="schedules != ''">
+          <li v-for="schedule in schedules" :key="schedule.id"">
+            <div class="event-time">
+              <span class="date">{{ schedule.event.date }}</span>
+              <span>{{ schedule.event.startTime }}</span>
+              <span v-if="schedule.event.startTime || schedule.event.endTime">〜</span>
+              <span>{{ schedule.event.endTime }}</span>
+            </div>
+            <p>{{ schedule.event.name }}</p>
+          </li>
+        </ul>
+        <h6 v-else>まだ登録されているスケジュールはありません</h6>
+      </div>
     </div>
   </div>
 </template>
@@ -60,22 +64,17 @@ export default {
 </script>
 
 <style lang="scss">
-.modal-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
+.modal {
+  display: block;
   background: rgba(0, 0, 0, 0.3);
-  width: 100%;
-  height: 100%;
-  .schedule-modal {
+  overflow-y: auto;
+  .modal-content {
     margin-top: 80px;
-    background: #fff;
     border: 1px solid #777;
     .event-time {
       color: #555;
       .date { margin-right: 16px; }
     }
-    p { margin-left: 16px; }
   }
 }
 </style>
