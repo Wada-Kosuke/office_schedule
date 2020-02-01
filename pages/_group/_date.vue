@@ -95,6 +95,7 @@ export default {
     return /^\d{4}-\d{2}-\d{2}$/.test(params.date)
   },
   created: function() {
+    document.getElementById("calendar-nav").classList.add("active")
     this.$store.dispatch('schedules/init')
     this.$store.dispatch('members/init')
     this.$store.dispatch('rooms/init')

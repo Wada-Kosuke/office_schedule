@@ -1,7 +1,7 @@
 <template>
   <nav class="col-lg-6">
     <ul>
-      <nuxt-link :to="today" tag="li" active-class="active">
+      <nuxt-link :to="today" tag="li" active-class="active" id="calendar-nav">
         <b-icon-calendar></b-icon-calendar> Schedule
       </nuxt-link>
       <nuxt-link to="member" tag="li" active-class="active">
