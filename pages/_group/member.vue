@@ -61,7 +61,9 @@ export default {
       document.getElementById("target").scrollIntoView(true)
     },
     remove(id) {
-      this.$store.dispatch('members/remove', id)
+      if (window.confirm('削除してよろしいですか？')) {
+        this.$store.dispatch('members/remove', id)
+      }
     },
     show(name) {
       this.showAbout = name
