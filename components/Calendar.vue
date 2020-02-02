@@ -31,14 +31,15 @@ export default {
   },
   methods: {
     goToDatePage (arg) {
-      const beforeDate = document.getElementsByClassName('fc-today')[0]
-      const clickedDate = arg.dayEl
-      beforeDate.classList.remove("fc-today")
-      clickedDate.classList.add("fc-today")
       this.$router.push({
         name: 'group-date',
         params: { date: arg.dateStr }
       })
+      const beforeDate = document.getElementsByClassName('fc-today')[0]
+      const clickedDate = arg.dayEl
+      beforeDate.classList.remove("fc-today")
+      clickedDate.classList.add("fc-today")
+      document.getElementById("calendar-nav").classList.add("active")
       document.getElementById("target").scrollIntoView(true)
     }
   }
