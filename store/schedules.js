@@ -19,6 +19,12 @@ export const actions = {
       })
     }
   }),
+  edit: firestoreAction((context, arg) => {
+    schedulesRef.doc(arg.schedule.id).update({
+      event: arg.editedEvent
+      }
+    )
+  }),
   remove: firestoreAction((context, id) => {
     schedulesRef.doc(id).delete()
   })

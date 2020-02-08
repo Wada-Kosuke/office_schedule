@@ -23,9 +23,9 @@
     </div>
     <transition name="modal">
       <ScheduleModal
-        v-if="showAbout"
+        v-if="scheduleModal"
         attr="item"
-        :name=showAbout
+        :name=scheduleModal
         @close="close"
       ></ScheduleModal>
     </transition>
@@ -42,7 +42,7 @@ export default {
         name: '',
         group: this.$route.params.group
       },
-      showAbout: ''
+      scheduleModal: ''
     }
   },
   components: {
@@ -66,10 +66,10 @@ export default {
       }
     },
     show(name) {
-      this.showAbout = name
+      this.scheduleModal = name
     },
     close() {
-      this.showAbout = ''
+      this.scheduleModal = ''
     }
   },
   computed: {

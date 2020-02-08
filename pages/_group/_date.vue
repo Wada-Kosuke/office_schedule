@@ -14,6 +14,7 @@
             <span>{{ schedule.event.endTime }}</span>
           </span>
           <span>{{ schedule.event.name }}</span>
+          <button @click="openEditModal(schedule)">編集</button>
           <button @click="remove(schedule.id)">削除</button>
           <p v-if="schedule.event.member != ''" class="event-data">
             参加者：{{ schedule.event.member.join(", ") }}
@@ -72,10 +73,23 @@
         <button class="button--green">追加</button>
       </form>
     </div>
+    <transition name="modal">
+      <EditModal
+        v-if="editModal"
+        :schedule="editModal"
+        :groupMembers=groupMembers
+        :groupRooms=groupRooms
+        :groupItems=groupItems
+        @close="close"
+        @edit="edit"
+      ></EditModal>
+    </transition>
   </div>
 </template>
 
 <script>
+import EditModal from '~/components/EditModal'
+
 export default {
   data: function() {
     return {
@@ -88,7 +102,8 @@ export default {
         member: [],
         place: '',
         item: []
-      }
+      },
+      editModal: ''
     }
   },
   validate({ params }) {
@@ -99,6 +114,9 @@ export default {
     this.$store.dispatch('members/init')
     this.$store.dispatch('rooms/init')
     this.$store.dispatch('items/init')
+  },
+  components: {
+    EditModal
   },
   methods: {
     add() {
@@ -158,6 +176,16 @@ export default {
         item: []
       }
       document.getElementById("target").scrollIntoView(true)
+    },
+    openEditModal(schedule) {
+      this.editModal = schedule
+    },
+    close() {
+      this.editModal = ''
+    },
+    edit(arg) {
+      this.$store.dispatch('schedules/edit', arg)
+      this.editModal = ''
     },
     remove(id) {
       if (window.confirm('削除してよろしいですか？')) {

@@ -129,6 +129,26 @@ button { font-size: 10px; }
   font-weight: bold;
 }
 
+// modal
+.modal {
+  display: block;
+  overflow-y: auto;
+  .modal-bg {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+  }
+  .modal-content {
+    margin-top: 80px;
+    border: 1px solid #777;
+    .event-time {
+      color: #555;
+      .date { margin-right: 16px; }
+    }
+  }
+}
+
 // カレンダータップ時に文字が選択されてしまうのでとりあえずこれで対処
 @media screen and (max-width: 993px) {
   .container-fluid { user-select: none; }

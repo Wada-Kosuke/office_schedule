@@ -1,5 +1,6 @@
 <template>
-  <div @click="close" class="modal">
+  <div class="modal">
+    <div @click="close" class="modal-bg"></div>
     <div class="list modal-content col-lg-6 col-10">
       <div class="modal-body">
         <h5 class="modal-title">
@@ -62,19 +63,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-.modal {
-  display: block;
-  background: rgba(0, 0, 0, 0.3);
-  overflow-y: auto;
-  .modal-content {
-    margin-top: 80px;
-    border: 1px solid #777;
-    .event-time {
-      color: #555;
-      .date { margin-right: 16px; }
-    }
-  }
-}
-</style>
