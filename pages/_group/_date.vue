@@ -119,63 +119,67 @@ export default {
     EditModal
   },
   methods: {
-    add() {
+    check(event, schedules) {
       // イベントの内容が空欄でないか
-      if (this.event.name === '') {
-        return
+      if (event.name === '') {
+        return false
       }
       // 開始時刻より終了時刻が小さい場合はreturn
-      if (this.event.endTime && this.event.startTime > this.event.endTime) {
+      if (event.endTime && event.startTime > event.endTime) {
         alert('時間が適切ではありません')
-        return
+        return false
       }
       // 参加者の時間、場所、アイテムの重複確認の処理
-      for (let i = 0; i < this.schedules.length; i++) {
-        const existingEventStartTime    = this.schedules[i].event.startTime
-        const existingEventEndTime      = this.schedules[i].event.endTime
-        const newEventStartTime         = this.event.startTime
-        const newEventEndTime           = this.event.endTime
+      for (let i = 0; i < schedules.length; i++) {
+        const existingEventStartTime    = schedules[i].event.startTime
+        const existingEventEndTime      = schedules[i].event.endTime
+        const newEventStartTime         = event.startTime
+        const newEventEndTime           = event.endTime
         // 時間が重複しているイベントがあるか
         if (existingEventStartTime <= newEventEndTime && existingEventEndTime >= newEventStartTime == true) {
-          const existingEventMember    = this.schedules[i].event.member
-          const newEventMember         = this.event.member
-          const existingEventItem      = this.schedules[i].event.item
-          const newEventItem           = this.event.item
+          const existingEventMember    = schedules[i].event.member
+          const newEventMember         = event.member
+          const existingEventItem      = schedules[i].event.item
+          const newEventItem           = event.item
           // メンバーが重複していないか
           if ([...existingEventMember, ...newEventMember].filter(member =>
             existingEventMember.includes(member) && newEventMember.includes(member)).length > 0
-            && window.confirm(`${this.schedules[i].event.name}とメンバーが重複しています。\nこのまま予定を登録してよろしいですか？`)
+            && window.confirm(`${schedules[i].event.name}とメンバーが重複しています。\nこのまま予定を登録してよろしいですか？`)
+            == false) {
+              return false
+            }
+            // 場所が重複していないか
+            if (event.place != '' &&
+            event.place == schedules[i].event.place &&
+            window.confirm(`${schedules[i].event.name}と場所が重複しています。\nこのまま予定を登録してよろしいですか？`)
+            == false) {
+              return false
+            }
+            // 使用するアイテムが重複していないか
+            if ([...existingEventItem, ...newEventItem].filter(item =>
+              existingEventItem.includes(item) && newEventItem.includes(item)).length > 0
+              && window.confirm(`${schedules[i].event.name}と使用するアイテムが重複しています。\nこのまま予定を登録してよろしいですか？`)
               == false) {
-            return
+                return false
+              }
+            }
           }
-          // 場所が重複していないか
-          if (this.event.place != '' &&
-            this.event.place == this.schedules[i].event.place &&
-            window.confirm(`${this.schedules[i].event.name}と場所が重複しています。\nこのまま予定を登録してよろしいですか？`)
-              == false) {
-            return
-          }
-          // 使用するアイテムが重複していないか
-          if ([...existingEventItem, ...newEventItem].filter(item =>
-            existingEventItem.includes(item) && newEventItem.includes(item)).length > 0
-            && window.confirm(`${this.schedules[i].event.name}と使用するアイテムが重複しています。\nこのまま予定を登録してよろしいですか？`)
-              == false) {
-            return
-          }
+    },
+    add() {
+      if (this.check(this.event, this.schedules) != false) {
+        this.$store.dispatch('schedules/add', this.event)
+        this.event = {
+          group: this.$route.params.group,
+          date: this.$route.params.date,
+          startTime: '',
+          endTime: '',
+          name: '',
+          member: [],
+          place: '',
+          item: []
         }
+        document.getElementById("target").scrollIntoView(true)
       }
-      this.$store.dispatch('schedules/add', this.event)
-      this.event = {
-        group: this.$route.params.group,
-        date: this.$route.params.date,
-        startTime: '',
-        endTime: '',
-        name: '',
-        member: [],
-        place: '',
-        item: []
-      }
-      document.getElementById("target").scrollIntoView(true)
     },
     openEditModal(schedule) {
       this.editModal = schedule
@@ -184,6 +188,10 @@ export default {
       this.editModal = ''
     },
     edit(arg) {
+      const otherSchedules = this.schedules.filter((schedule) => {
+        return (schedule.id != arg.schedule.id)
+      })
+      this.check(arg.editedEvent, otherSchedules)
       this.$store.dispatch('schedules/edit', arg)
       this.editModal = ''
     },
