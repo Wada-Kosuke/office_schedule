@@ -78,4 +78,12 @@ button { transform: translateY(30px); }
   transform: translate(160px, -20px);
   display: relative;
 }
+
+@media screen and (max-width: 500px) {
+  .button--green {
+    margin-left: 0;
+    width: 100px;
+  }
+  .cansel-button { transform: translate(130px, -20px); }
+}
 </style>
