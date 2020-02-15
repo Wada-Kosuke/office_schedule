@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="calender col-lg-6">
-      <full-calendar></full-calendar>
+      <VCalendar></VCalendar>
       <p>日付をクリックすると予定が表示されます</p>
     </div>
     <div class="list col-lg-8" id="target">
@@ -89,13 +89,14 @@
 
 <script>
 import EditModal from '~/components/EditModal'
+import VCalendar from '~/components/VCalendar'
 
 export default {
   data: function() {
     return {
       event: {
         group: this.$route.params.group,
-        date: this.$route.params.date,
+        date: '',
         startTime: '',
         endTime: '',
         name: '',
@@ -116,10 +117,11 @@ export default {
     this.$store.dispatch('items/init')
   },
   components: {
-    EditModal
+    EditModal,
+    VCalendar
   },
   methods: {
-    check(event, schedules) {
+    check(event, schedules) { // schedules内からeventをチェック
       // イベントの内容が空欄でないか
       if (event.name === '') {
         return false
@@ -166,6 +168,7 @@ export default {
           }
     },
     add() {
+      this.event.date = this.$route.params.date
       if (this.check(this.event, this.schedules) != false) {
         this.$store.dispatch('schedules/add', this.event)
         this.event = {
@@ -271,34 +274,11 @@ export default {
 // calendar
 .calender {
   margin: auto;
-  position: relative;
-  h4 { margin: 20px 0; }
+  .vc-container { margin: auto; }
   p {
     margin-top: 12px;
     text-align: center;
     color: #555;
-  }
-}
-.fc {
-  width: 280px;
-  margin: 12px auto;
-  user-select: none;
-  h2 {
-    margin: 0;
-    font-size: 20px;
-  }
-  button {
-    height: 30px;
-    padding: 0 8px;
-  }
-  .fc-today-button { display: none; }
-  .fc-day, .fc-day-top { cursor: pointer; }
-  .fc-content-skeleton { padding: 0 !important; }
-  .fc-body .fc-row { min-height: 0 !important; }
-  .fc-day-number {
-    width: 100%;
-    padding: 2px 0 !important;
-    text-align: center;
   }
 }
 </style>

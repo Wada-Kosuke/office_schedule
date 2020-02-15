@@ -150,7 +150,7 @@ button { font-size: 10px; }
 }
 
 // カレンダータップ時に文字が選択されてしまうのでとりあえずこれで対処
-@media screen and (max-width: 993px) {
-  .container-fluid { user-select: none; }
-}
+// @media screen and (max-width: 993px) {
+//   .container-fluid { user-select: none; }
+// }
 </style>
